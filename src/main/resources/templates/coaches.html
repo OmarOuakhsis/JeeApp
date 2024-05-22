@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="menu">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Coachs</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+
+    <!-- CSS personnalisé pour la page Liste des Coachs -->
+    <style>
+        /* CSS personnalisé pour la page Liste des Coachs */
+        body {
+            font-family: Courier New, sans-serif;
+            background-color: #ef0202; /* Couleur de fond */
+        }
+
+        .card {
+            margin-top: 20px;
+        }
+
+        .card-header {
+            background-color: #5d5959; /* Couleur de fond de l'en-tête de la carte */
+            color: #212529; /* Couleur du texte de l'en-tête de la carte */
+        }
+
+        .table {
+            background-color: #ffffff; /* Couleur de fond du tableau */
+
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Couleur de fond du bouton primaire */
+            border-color: #007bff; /* Couleur de la bordure du bouton primaire */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Couleur de fond du bouton primaire au survol */
+            border-color: #0056b3; /* Couleur de la bordure du bouton primaire au survol */
+        }
+
+        .btn-danger {
+            background-color: #dc3545; /* Couleur de fond du bouton danger */
+            border-color: #dc3545; /* Couleur de la bordure du bouton danger */
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Couleur de fond du bouton danger au survol */
+            border-color: #bd2130; /* Couleur de la bordure du bouton danger au survol */
+        }
+
+        .btn-outline-dark {
+            color: #343a40; /* Couleur du texte du bouton sombre */
+            border-color: #343a40; /* Couleur de la bordure du bouton sombre */
+        }
+
+        .btn-outline-dark:hover {
+            color: #ffffff; /* Couleur du texte du bouton sombre au survol */
+            background-color: #343a40; /* Couleur de fond du bouton sombre au survol */
+            border-color: #343a40; /* Couleur de la bordure du bouton sombre au survol */
+        }
+
+
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="p-3">
+        <div class="card">
+            <div class="card-header">Liste Des Coaches</div>
+            <form method="get" th:action="@{coaches}">
+                <input type="text" name="search" th:value="${searchName}">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>CIN</td>
+                        <td>Name</td>
+                        <td>Date de Naissance</td>
+                        <td>Active</td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="coach:${pageCoaches}">
+                        <td th:text="${coach.id}"></td>
+                        <td th:text="${coach.registrationNumber}"></td>
+                        <td th:text="${coach.fullName}"></td>
+                        <td th:text="${coach.dateOfBirth}"></td>
+                        <td th:text="${coach.active}"></td>
+
+                        <td>
+                            <a class="btn btn-danger" th:href="@{deleteCoach(page=${currentPage}, size=${size}, search=${searchName}, id=${coach.id})}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M2.5 5.5a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5V6h-11v-.5zm12-2a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V5h2V3.5zM5 6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V14h-2V6.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5V14h-2V6.5zm-3-1V5h2V5.5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 5.5a.5.5 0 0 0 .5-.5V5h2v.5a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V5h1.5a.5.5 0 0 0 0-1H13V2.5a1.5 1.5 0 0 0-1.5-1.5h-7A1.5 1.5 0 0 0 3 2.5V4H1.5a.5.5 0 0 0 0 1h3zM4 6V4h2v2H4zm3 0V4h2v2H7zm-3 1h6V14H4V7zm3 0h2V14H7V7z"/>
+                                </svg>
+                                Delete
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-dark" th:href="@{editCoach(page=${currentPage}, size=${size}, search=${searchName}, id=${coach.id})}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M13.354 2.646a.5.5 0 0 1 0 .708L2.707 13.707a.5.5 0 0 0-.084.607l-.669 1.338a.5.5 0 0 0 .584.645l1.338-.669a.5.5 0 0 0 .607-.084l11.353-11.353a.5.5 0 0 1 .708 0zm-1.768.768l-9.9 9.9L3 14l9.9-9.9 1.586-1.586z"/>
+                                    <path fill-rule="evenodd" d="M13.646 1.354a2 2 0 0 1 0 2.828l-11 11a2 2 0 0 1-2.828-2.828l11-11a2 2 0 0 1 2.828 0zM14 4l-1.5-1.5L13.5 1 15 2.5 14 4z"/>
+                                </svg>
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="container">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item me-2" th:each="p:${tabPages}">
+                            <a th:text="${p+1}"
+                               th:class="${p==currentPage? 'btn btn-primary' : 'btn btn-outline-primary'}"
+                               th:href="@{coaches(page=${p}, size=${size}, search=${searchName})}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

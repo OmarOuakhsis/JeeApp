@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="menu">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Coach</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css">
+
+    <!-- CSS personnalisé pour la page Edit Coach -->
+    <style>
+        /* CSS personnalisé pour la page Edit Coach */
+        body {
+            font-family: Courier New, sans-serif;
+            background-color: #ef0202; /* Couleur de fond */
+        }
+
+        .card {
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #5d5959; /* Couleur de fond de l'en-tête de la carte */
+            color: #212529; /* Couleur du texte de l'en-tête de la carte */
+            border-radius: 10px 10px 0 0;
+        }
+
+        .form-control {
+            background-color: #ffffcc; /* Couleur de fond des champs de saisie */
+            color: #495057; /* Couleur du texte des champs de saisie */
+            border-color: #ced4da; /* Couleur de la bordure des champs de saisie */
+            border-radius: 5px;
+        }
+
+        .form-check {
+            color: #495057; /* Couleur du texte des cases à cocher */
+        }
+
+        .btn-primary {
+            background-color: #ffc107; /* Couleur de fond du bouton primaire */
+            border-color: #ffc107; /* Couleur de la bordure du bouton primaire */
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0a800; /* Couleur de fond du bouton primaire au survol */
+            border-color: #e0a800; /* Couleur de la bordure du bouton primaire au survol */
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5); /* Effet de focus */
+        }
+
+
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="p-3">
+        <div class="card">
+            <div class="card-header">Edit Coach</div>
+            <form method="post" th:action="@{/saveCoach}">
+
+                <input id="id" type="hidden" name="id" th:value="${coach.id}">
+                <input type="hidden" name="currentPage" th:value="${currentPage}">
+                <input type="hidden" name="size" th:value="${size}">
+                <input type="hidden" name="searchName" th:value="${searchName}">
+
+                <div class="mb-3">
+                    <label for="fullName" class="form-control">Full Name</label>
+                    <input id="fullName" type="text" name="fullName" th:value="${coach.fullName}" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="dateOfBirth" class="form-control">Birthday</label>
+                    <input id="dateOfBirth" type="date" name="dateOfBirth" th:value="${coach.dateOfBirth}" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for ="register" class="form-control">Cin</label>
+                    <input id ="register" type="text" name="registrationNumber" th:value="${coach.registrationNumber}">
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input id="active" type="checkbox" name="stillActive" th:checked="${coach.active}" class="form-check-input">
+                    <label for="active" class="form-check-label">Actif</label>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Update</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
